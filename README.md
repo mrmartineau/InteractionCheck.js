@@ -6,5 +6,7 @@ Prompt users if they have not interacted with your page for a given amount of ti
 Start the prompt:
 
 ```js
-PROMPT.init();
+var mousemovePrompt = new Prompt('mousemove', 4000, function() {
+	alert('The mouse moved');
+});
 ```

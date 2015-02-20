@@ -9,7 +9,10 @@
 		<h1>Prompt.js by Zander Martineau</h1>
 		<script src="dist/prompt.js"></script>
 		<script>
-		PROMPT.init();
+			var mousemovePrompt = new Prompt('mousemove', 4000, function() {
+				alert('no mousemove');
+			});
+
 		</script>
 	</body>
 </html>

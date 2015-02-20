@@ -3,7 +3,7 @@
   "title": "prompt.js",
   "description": "Prompt users if they have not interacted with your page for a given amount of time",
   "main": "dist/prompt.js",
-  "version": "0.1.0",
+  "version": "0.1.5",
   "homepage": "https://github.com/mrmartineau/prompt",
   "author": {
     "name": "Zander Martineau",
