@@ -1,32 +1,28 @@
 /**
  * TODO:
  * Should it prompt multiple times?
- * Node?
- * Add options
- * Call with new Prompt('mousemove', 5000, cb)
+ * Disable prompt after n times?
  */
 
-function Prompt(listenFor, interval, cb) {
+function Prompt(event, interval, cb) {
 
-	this.listenFor = listenFor || 'mousemove';
+	this.event     = event || 'mousemove';
 	this.interval  = interval  || 6000;
 	this.now       = new Date();
 	this.cb        = cb || undefined;
 
-	this.listener.call(this);
-
 	if (document.addEventListener) {
-		document.addEventListener(this.listenFor, this.listener.call(this), false);
+		document.addEventListener(this.event, this.listener.bind(this));
 	} else if (document.attachEvent) {
-		document.attachEvent(this.listenFor, this.listener.call(this));
+		document.attachEvent(this.event, this.listener);
 	}
 
 	// Run check every n seconds
-	setInterval(this.checkForInteraction.call(this), this.interval);
+	setInterval(this.checkForInteraction.bind(this), this.interval);
 }
 
+
 Prompt.prototype.listener = function() {
-	// console.log("listener", this);
 	this.now = new Date();
 	this.checkForInteraction.call(this);
 };
@@ -37,29 +33,29 @@ Prompt.prototype.checkForInteraction = function() {
 	var timeCheck       = new Date();
 	var timeCheckString = timeCheck.getMinutes() + ':' + timeCheck.getSeconds();
 	var nowString       = this.now.getMinutes() + ':' + this.now.getSeconds();
-	console.log("checkForInteraction", this);
 
 	if ( timeCheckString !== nowString ) {
 		this.promptUser.call(this);
-	} else {
-		// Run this function or do nothing
-		this.dontPromptUser.call(this);
 	}
 };
 
 
-//
+
 Prompt.prototype.promptUser = function() {
-	console.log("promptUser", this);
 	this.prompt = true;
-	console.log('Do something!');
 	this.cb();
 };
 
 
-//
-Prompt.prototype.dontPromptUser = function() {
-	this.prompt = false;
-	console.log('Do nothing!');
-	// this.cb();
-};
+// Check for AMD/Module support, otherwise define trak as a global variable.
+if (typeof define !== 'undefined' && define.amd) {
+	// AMD. Register as an anonymous module.
+	define (function() {
+		'use strict';
+		return Prompt;
+	});
+} else if (typeof module !== 'undefined' && module.exports) {
+	module.exports = Prompt;
+} else {
+	window.Prompt = Prompt;
+}
