@@ -21,11 +21,11 @@ var scrollPrompt = new Prompt('scroll', 4000, function() {
 
 `Prompt(event, interval, callback)`
 
-### `event`
+### `event` [string]
 Can be any javascript event, e.g. `mousemove` or `scroll`.
 
-### `interval`
+### `interval` [integer]
 Is the number of milliseconds (thousandths of a second)
 
-### `callback`
+### `callback` [function]
 A callback function to be run if the user is inactive for your specified amount of time.
