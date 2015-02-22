@@ -1,38 +1,34 @@
 /**
  * prompt.js - Prompt users if they have not interacted with your page for a given amount of time
- * @version v0.4.0
+ * @version v0.2.0
  * @link https://github.com/mrmartineau/prompt
  * @license MIT
  */
 /**
  * TODO:
  * Should it prompt multiple times?
- * Node?
- * Add options
- * Call with new Prompt('mousemove', 5000, cb)
+ * Disable prompt after n times?
  */
 
-function Prompt(listenFor, interval, cb) {
+function Prompt(event, interval, cb) {
 
-	this.listenFor = listenFor || 'mousemove';
+	this.event     = event || 'mousemove';
 	this.interval  = interval  || 6000;
 	this.now       = new Date();
 	this.cb        = cb || undefined;
 
-	this.listener.call(this);
-
 	if (document.addEventListener) {
-		document.addEventListener(this.listenFor, this.listener.call(this), false);
+		document.addEventListener(this.event, this.listener.bind(this));
 	} else if (document.attachEvent) {
-		document.attachEvent(this.listenFor, this.listener.call(this));
+		document.attachEvent(this.event, this.listener);
 	}
 
 	// Run check every n seconds
-	setInterval(this.checkForInteraction.call(this), this.interval);
+	setInterval(this.checkForInteraction.bind(this), this.interval);
 }
 
+
 Prompt.prototype.listener = function() {
-	// console.log("listener", this);
 	this.now = new Date();
 	this.checkForInteraction.call(this);
 };
@@ -43,30 +39,31 @@ Prompt.prototype.checkForInteraction = function() {
 	var timeCheck       = new Date();
 	var timeCheckString = timeCheck.getMinutes() + ':' + timeCheck.getSeconds();
 	var nowString       = this.now.getMinutes() + ':' + this.now.getSeconds();
-	console.log("checkForInteraction", this);
 
 	if ( timeCheckString !== nowString ) {
 		this.promptUser.call(this);
-	} else {
-		// Run this function or do nothing
-		this.dontPromptUser.call(this);
 	}
 };
 
 
-//
+
 Prompt.prototype.promptUser = function() {
-	console.log("promptUser", this);
 	this.prompt = true;
-	console.log('Do something!');
 	this.cb();
 };
 
 
-//
-Prompt.prototype.dontPromptUser = function() {
-	this.prompt = false;
-	console.log('Do nothing!');
-	// this.cb();
-};
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInByb21wdC5qcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBIiwiZmlsZSI6InByb21wdC5qcyIsInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogVE9ETzpcbiAqIFNob3VsZCBpdCBwcm9tcHQgbXVsdGlwbGUgdGltZXM/XG4gKiBOb2RlP1xuICogQWRkIG9wdGlvbnNcbiAqIENhbGwgd2l0aCBuZXcgUHJvbXB0KCdtb3VzZW1vdmUnLCA1MDAwLCBjYilcbiAqL1xuXG5mdW5jdGlvbiBQcm9tcHQobGlzdGVuRm9yLCBpbnRlcnZhbCwgY2IpIHtcblxuXHR0aGlzLmxpc3RlbkZvciA9IGxpc3RlbkZvciB8fCAnbW91c2Vtb3ZlJztcblx0dGhpcy5pbnRlcnZhbCAgPSBpbnRlcnZhbCAgfHwgNjAwMDtcblx0dGhpcy5ub3cgICAgICAgPSBuZXcgRGF0ZSgpO1xuXHR0aGlzLmNiICAgICAgICA9IGNiIHx8IHVuZGVmaW5lZDtcblxuXHR0aGlzLmxpc3RlbmVyLmNhbGwodGhpcyk7XG5cblx0aWYgKGRvY3VtZW50LmFkZEV2ZW50TGlzdGVuZXIpIHtcblx0XHRkb2N1bWVudC5hZGRFdmVudExpc3RlbmVyKHRoaXMubGlzdGVuRm9yLCB0aGlzLmxpc3RlbmVyLmNhbGwodGhpcyksIGZhbHNlKTtcblx0fSBlbHNlIGlmIChkb2N1bWVudC5hdHRhY2hFdmVudCkge1xuXHRcdGRvY3VtZW50LmF0dGFjaEV2ZW50KHRoaXMubGlzdGVuRm9yLCB0aGlzLmxpc3RlbmVyLmNhbGwodGhpcykpO1xuXHR9XG5cblx0Ly8gUnVuIGNoZWNrIGV2ZXJ5IG4gc2Vjb25kc1xuXHRzZXRJbnRlcnZhbCh0aGlzLmNoZWNrRm9ySW50ZXJhY3Rpb24uY2FsbCh0aGlzKSwgdGhpcy5pbnRlcnZhbCk7XG59XG5cblByb21wdC5wcm90b3R5cGUubGlzdGVuZXIgPSBmdW5jdGlvbigpIHtcblx0Ly8gY29uc29sZS5sb2coXCJsaXN0ZW5lclwiLCB0aGlzKTtcblx0dGhpcy5ub3cgPSBuZXcgRGF0ZSgpO1xuXHR0aGlzLmNoZWNrRm9ySW50ZXJhY3Rpb24uY2FsbCh0aGlzKTtcbn07XG5cblxuLy8gQ2hlY2tzIHRoYXQgYXJlIGRvbmUgZXZlcnkgbiBzZWNvbmRzXG5Qcm9tcHQucHJvdG90eXBlLmNoZWNrRm9ySW50ZXJhY3Rpb24gPSBmdW5jdGlvbigpIHtcblx0dmFyIHRpbWVDaGVjayAgICAgICA9IG5ldyBEYXRlKCk7XG5cdHZhciB0aW1lQ2hlY2tTdHJpbmcgPSB0aW1lQ2hlY2suZ2V0TWludXRlcygpICsgJzonICsgdGltZUNoZWNrLmdldFNlY29uZHMoKTtcblx0dmFyIG5vd1N0cmluZyAgICAgICA9IHRoaXMubm93LmdldE1pbnV0ZXMoKSArICc6JyArIHRoaXMubm93LmdldFNlY29uZHMoKTtcblx0Y29uc29sZS5sb2coXCJjaGVja0ZvckludGVyYWN0aW9uXCIsIHRoaXMpO1xuXG5cdGlmICggdGltZUNoZWNrU3RyaW5nICE9PSBub3dTdHJpbmcgKSB7XG5cdFx0dGhpcy5wcm9tcHRVc2VyLmNhbGwodGhpcyk7XG5cdH0gZWxzZSB7XG5cdFx0Ly8gUnVuIHRoaXMgZnVuY3Rpb24gb3IgZG8gbm90aGluZ1xuXHRcdHRoaXMuZG9udFByb21wdFVzZXIuY2FsbCh0aGlzKTtcblx0fVxufTtcblxuXG4vL1xuUHJvbXB0LnByb3RvdHlwZS5wcm9tcHRVc2VyID0gZnVuY3Rpb24oKSB7XG5cdGNvbnNvbGUubG9nKFwicHJvbXB0VXNlclwiLCB0aGlzKTtcblx0dGhpcy5wcm9tcHQgPSB0cnVlO1xuXHRjb25zb2xlLmxvZygnRG8gc29tZXRoaW5nIScpO1xuXHR0aGlzLmNiKCk7XG59O1xuXG5cbi8vXG5Qcm9tcHQucHJvdG90eXBlLmRvbnRQcm9tcHRVc2VyID0gZnVuY3Rpb24oKSB7XG5cdHRoaXMucHJvbXB0ID0gZmFsc2U7XG5cdGNvbnNvbGUubG9nKCdEbyBub3RoaW5nIScpO1xuXHQvLyB0aGlzLmNiKCk7XG59OyJdLCJzb3VyY2VSb290IjoiL3NvdXJjZS8ifQ==
+// Check for AMD/Module support, otherwise define trak as a global variable.
+if (typeof define !== 'undefined' && define.amd) {
+	// AMD. Register as an anonymous module.
+	define (function() {
+		'use strict';
+		return Prompt;
+	});
+} else if (typeof module !== 'undefined' && module.exports) {
+	module.exports = Prompt;
+} else {
+	window.Prompt = Prompt;
+}
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInByb21wdC5qcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBIiwiZmlsZSI6InByb21wdC5qcyIsInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogVE9ETzpcbiAqIFNob3VsZCBpdCBwcm9tcHQgbXVsdGlwbGUgdGltZXM/XG4gKiBEaXNhYmxlIHByb21wdCBhZnRlciBuIHRpbWVzP1xuICovXG5cbmZ1bmN0aW9uIFByb21wdChldmVudCwgaW50ZXJ2YWwsIGNiKSB7XG5cblx0dGhpcy5ldmVudCAgICAgPSBldmVudCB8fCAnbW91c2Vtb3ZlJztcblx0dGhpcy5pbnRlcnZhbCAgPSBpbnRlcnZhbCAgfHwgNjAwMDtcblx0dGhpcy5ub3cgICAgICAgPSBuZXcgRGF0ZSgpO1xuXHR0aGlzLmNiICAgICAgICA9IGNiIHx8IHVuZGVmaW5lZDtcblxuXHRpZiAoZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcikge1xuXHRcdGRvY3VtZW50LmFkZEV2ZW50TGlzdGVuZXIodGhpcy5ldmVudCwgdGhpcy5saXN0ZW5lci5iaW5kKHRoaXMpKTtcblx0fSBlbHNlIGlmIChkb2N1bWVudC5hdHRhY2hFdmVudCkge1xuXHRcdGRvY3VtZW50LmF0dGFjaEV2ZW50KHRoaXMuZXZlbnQsIHRoaXMubGlzdGVuZXIpO1xuXHR9XG5cblx0Ly8gUnVuIGNoZWNrIGV2ZXJ5IG4gc2Vjb25kc1xuXHRzZXRJbnRlcnZhbCh0aGlzLmNoZWNrRm9ySW50ZXJhY3Rpb24uYmluZCh0aGlzKSwgdGhpcy5pbnRlcnZhbCk7XG59XG5cblxuUHJvbXB0LnByb3RvdHlwZS5saXN0ZW5lciA9IGZ1bmN0aW9uKCkge1xuXHR0aGlzLm5vdyA9IG5ldyBEYXRlKCk7XG5cdHRoaXMuY2hlY2tGb3JJbnRlcmFjdGlvbi5jYWxsKHRoaXMpO1xufTtcblxuXG4vLyBDaGVja3MgdGhhdCBhcmUgZG9uZSBldmVyeSBuIHNlY29uZHNcblByb21wdC5wcm90b3R5cGUuY2hlY2tGb3JJbnRlcmFjdGlvbiA9IGZ1bmN0aW9uKCkge1xuXHR2YXIgdGltZUNoZWNrICAgICAgID0gbmV3IERhdGUoKTtcblx0dmFyIHRpbWVDaGVja1N0cmluZyA9IHRpbWVDaGVjay5nZXRNaW51dGVzKCkgKyAnOicgKyB0aW1lQ2hlY2suZ2V0U2Vjb25kcygpO1xuXHR2YXIgbm93U3RyaW5nICAgICAgID0gdGhpcy5ub3cuZ2V0TWludXRlcygpICsgJzonICsgdGhpcy5ub3cuZ2V0U2Vjb25kcygpO1xuXG5cdGlmICggdGltZUNoZWNrU3RyaW5nICE9PSBub3dTdHJpbmcgKSB7XG5cdFx0dGhpcy5wcm9tcHRVc2VyLmNhbGwodGhpcyk7XG5cdH1cbn07XG5cblxuXG5Qcm9tcHQucHJvdG90eXBlLnByb21wdFVzZXIgPSBmdW5jdGlvbigpIHtcblx0dGhpcy5wcm9tcHQgPSB0cnVlO1xuXHR0aGlzLmNiKCk7XG59O1xuXG5cbi8vIENoZWNrIGZvciBBTUQvTW9kdWxlIHN1cHBvcnQsIG90aGVyd2lzZSBkZWZpbmUgdHJhayBhcyBhIGdsb2JhbCB2YXJpYWJsZS5cbmlmICh0eXBlb2YgZGVmaW5lICE9PSAndW5kZWZpbmVkJyAmJiBkZWZpbmUuYW1kKSB7XG5cdC8vIEFNRC4gUmVnaXN0ZXIgYXMgYW4gYW5vbnltb3VzIG1vZHVsZS5cblx0ZGVmaW5lIChmdW5jdGlvbigpIHtcblx0XHQndXNlIHN0cmljdCc7XG5cdFx0cmV0dXJuIFByb21wdDtcblx0fSk7XG59IGVsc2UgaWYgKHR5cGVvZiBtb2R1bGUgIT09ICd1bmRlZmluZWQnICYmIG1vZHVsZS5leHBvcnRzKSB7XG5cdG1vZHVsZS5leHBvcnRzID0gUHJvbXB0O1xufSBlbHNlIHtcblx0d2luZG93LlByb21wdCA9IFByb21wdDtcbn1cbiJdLCJzb3VyY2VSb290IjoiL3NvdXJjZS8ifQ==
