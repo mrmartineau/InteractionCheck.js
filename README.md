@@ -19,7 +19,7 @@ var scrollPrompt = new Prompt('scroll', 4000, function() {
 
 // Prevent from starting immediately and restarting
 var touchstartPrompt = new Prompt('touchstart', 4000, function() {
-	console.log('no mousemove');
+	console.log('no touchstart');
 }, false, false);
 ```
 
@@ -63,7 +63,7 @@ Call `stop()` to stop the prompt's timer at any time.
 
 ```js
 var touchstartPrompt = new Prompt('touchstart', 4000, function() {
-	console.log('no mousemove');
+	console.log('no touchstart');
 }, false, false);
 
 // Start the prompt
