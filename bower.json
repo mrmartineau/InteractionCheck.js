@@ -1,0 +1,26 @@
+{
+  "name": "InteractionCheck.js",
+  "version": "0.3.1",
+  "homepage": "https://github.com/mrmartineau/InteractionCheck.js",
+  "authors": [
+    "Zander Martineau <zander@martineau.tv>"
+  ],
+  "description": "Use this script to check if your users have not interacted with your page after a given amount of time",
+  "main": "dist/interactioncheck.js",
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "interaction"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

@@ -2,8 +2,27 @@
 # InteractionCheck.js
 Use this script to check if your users have not interacted with your page after a given amount of time. You can choose what to listen for (`mousemove` or `scroll` are good examples) and then run a callback function afterwards.
 
-## Usage
 
+### Bower
+`bower install interactioncheck`
+
+### NPM
+`npm install interactioncheck --save`
+
+## Usage
+Include **interactioncheck.js** in your JavaScript bundle or add it to your HTML page like this:
+
+```html
+<script type='application/javascript' src='/path/to/interactioncheck.js'></script>
+```
+
+or with NPM/Browserify
+
+```js
+var InteractionCheck = require('interactioncheck');
+```
+
+### Create a new checker
 ```js
 // Listen for mousemove event
 var mousemoveCheck = new InteractionCheck('mousemove', 4000, function() {
