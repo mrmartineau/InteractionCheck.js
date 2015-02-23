@@ -10,11 +10,12 @@
 		<script src="dist/prompt.js"></script>
 		<script>
 			var mousemovePrompt = new Prompt('mousemove', 4000, function() {
-				console.log('no mousemove');
-			});
-			var scrollPrompt = new Prompt('scroll', 4000, function() {
+				console.log('no mouse movement was detected - do something');
+			}, true, false);
+
+			var scrollPrompt = new Prompt('scroll', 8000, function() {
 				console.log('no scroll');
-			});
+			}, true, false);
 
 		</script>
 	</body>
