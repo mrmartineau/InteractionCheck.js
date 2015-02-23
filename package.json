@@ -1,10 +1,10 @@
 {
-  "name": "prompt.js",
-  "title": "prompt.js",
-  "description": "Prompt users if they have not interacted with your page for a given amount of time",
-  "main": "dist/prompt.js",
+  "name": "InteractionCheck",
+  "title": "InteractionCheck",
+  "description": "Use this script to check if your users have not interacted with your page after a given amount of time",
+  "main": "dist/interactioncheck.js",
   "version": "0.3.0",
-  "homepage": "https://github.com/mrmartineau/prompt",
+  "homepage": "https://github.com/mrmartineau/InteractionCheck.js",
   "author": {
     "name": "Zander Martineau",
     "url": "http://martineau.tv"
@@ -34,7 +34,7 @@
     "run-sequence": "^1.0.2"
   },
   "keywords": [
-    "prompt"
+    "interaction"
   ],
   "dependencies": {},
   "license": "MIT"

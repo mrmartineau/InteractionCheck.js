@@ -15,7 +15,7 @@ var CONFIG = {
 
 	JS : {
 		FILELIST : [ // CONFIG.JS.FILELIST
-			'prompt.js'
+			'interactioncheck.js'
 		]
 	},
 
@@ -33,7 +33,7 @@ var CONFIG = {
 gulp.task('js', function() {
 	return gulp.src(CONFIG.JS.FILELIST)
 		.pipe($.sourcemaps.init())
-			.pipe($.concat('prompt.js'))
+			.pipe($.concat('interactioncheck.js'))
 		.pipe($.sourcemaps.write())
 		.pipe($.header(CONFIG.BANNER, { pkg : pkg } ))
 		.pipe(gulp.dest(CONFIG.DISTDIR))
@@ -56,7 +56,7 @@ gulp.task('serve', ['js'], function () {
 		}
 	});
 
-	gulp.watch(['prompt.js'], ['js']);
+	gulp.watch(['interactioncheck.js'], ['js']);
 	gulp.watch(['*.html'], reload({stream:true}));
 });
 
@@ -68,7 +68,7 @@ gulp.task('default', function (cb) {
 
 // Watch task
 gulp.task('watch', ['js'], function () {
-	gulp.watch(['prompt.js'], ['js']);
+	gulp.watch(['interactioncheck.js'], ['js']);
 });
 
 

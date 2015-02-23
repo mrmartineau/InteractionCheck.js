@@ -1,4 +1,4 @@
-function Prompt(event, interval, callback, startImmediately, restart) {
+function InteractionCheck(event, interval, callback, startImmediately, restart) {
 
 	this.event            = event || 'mousemove';
 	this.interval         = interval  || 6000;
@@ -34,7 +34,7 @@ function Prompt(event, interval, callback, startImmediately, restart) {
 /**
  * Clear the timer
  */
-Prompt.prototype.clearTimer = function() {
+InteractionCheck.prototype.clearTimer = function() {
 
 	if (this.timer) {
 		clearTimeout(this.timer);
@@ -47,7 +47,7 @@ Prompt.prototype.clearTimer = function() {
  * Trigger your callback and stop timer
  * Timer will be restarted if this.restart === true
  */
-Prompt.prototype.triggerCallback = function() {
+InteractionCheck.prototype.triggerCallback = function() {
 
 	this.state = 'idle';
 	this.timer = null;
@@ -63,7 +63,7 @@ Prompt.prototype.triggerCallback = function() {
  * Start the timer
  * Public method, can be called manually
  */
-Prompt.prototype.start = function() {
+InteractionCheck.prototype.start = function() {
 
 	this.clearTimer.call(this);
 	this.state = 'active';
@@ -75,7 +75,7 @@ Prompt.prototype.start = function() {
  * Stop the interaction checker
  * Public method, can be called manually
  */
-Prompt.prototype.stop = function() {
+InteractionCheck.prototype.stop = function() {
 
 	this.state = 'idle';
 	this.clearTimer.call(this);
@@ -87,10 +87,10 @@ if (typeof define !== 'undefined' && define.amd) {
 	// AMD. Register as an anonymous module.
 	define (function() {
 		'use strict';
-		return Prompt;
+		return InteractionCheck;
 	});
 } else if (typeof module !== 'undefined' && module.exports) {
-	module.exports = Prompt;
+	module.exports = InteractionCheck;
 } else {
-	window.Prompt = Prompt;
+	window.InteractionCheck = InteractionCheck;
 }

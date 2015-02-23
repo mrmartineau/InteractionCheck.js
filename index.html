@@ -2,19 +2,20 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>prompt</title>
+	<title>InteractionCheck.js</title>
 	<link rel="stylesheet" href="http://tmwagency.github.io/kickoff/css/kickoff.css">
 </head>
 	<body class="l-container" style="height:4000px;">
-		<h1>Prompt.js by Zander Martineau</h1>
+		<h1>InteractionCheck.js by Zander Martineau</h1>
+		<p>Open your javascript console to see the results</p>
 		<script src="dist/prompt.js"></script>
 		<script>
 			var mousemovePrompt = new Prompt('mousemove', 4000, function() {
-				console.log('no mouse movement was detected - do something');
+				console.log('no mouse interaction was detected - do something');
 			}, true, false);
 
 			var scrollPrompt = new Prompt('scroll', 8000, function() {
-				console.log('no scroll');
+				console.log('no scroll interaction was detected - do something');
 			}, true, false);
 
 		</script>
