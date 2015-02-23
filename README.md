@@ -61,6 +61,8 @@ Call `start()` to start the prompt if you have not started it immediately with t
 ### `Prompt.stop()`
 Call `stop()` to stop the prompt's timer at any time.
 
+### `start()` / `stop()` examples
+
 ```js
 var touchstartPrompt = new Prompt('touchstart', 4000, function() {
 	console.log('no touchstart');
