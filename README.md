@@ -53,24 +53,24 @@ Set this to `true` to restart the check after the callback has fired.
 
 ## Public methods
 
-### `Prompt.start()`
+### `InteractionCheck.start()`
 Call `start()` to start the check if `startImmediately` has been set to `false`.
 
-### `Prompt.stop()`
+### `InteractionCheck.stop()`
 Call `stop()` to stop the check's timer at any time.
 
 #### `start()` / `stop()` examples
 
 ```js
-var touchstartPrompt = new InteractionCheck('touchstart', 4000, function() {
+var touchstartCheck = new InteractionCheck('touchstart', 4000, function() {
 	console.log('no touchstart');
 }, false, false);
 
 // Start the prompt
-touchstartPrompt.start();
+touchstartCheck.start();
 
 // Stop the prompt
-touchstartPrompt.stop();
+touchstartCheck.stop();
 ```
 
 ## Browser support
