@@ -1,49 +1,84 @@
-/**
- * TODO:
- * Should it prompt multiple times?
- * Disable prompt after n times?
- */
+function Prompt(event, interval, callback, startImmediately, restart) {
 
-function Prompt(event, interval, cb) {
+	this.event            = event || 'mousemove';
+	this.interval         = interval  || 6000;
+	this.startImmediately = (typeof startImmediately === "undefined") ? true : startImmediately;
+	this.restart          = (typeof restart === "undefined") ? true : restart;
+	this.callback         = callback || undefined;
 
-	this.event     = event || 'mousemove';
-	this.interval  = interval  || 6000;
-	this.now       = new Date();
-	this.cb        = cb || undefined;
+	this.timer            = null;
+	this.state            = 'idle';
 
-	if (document.addEventListener) {
-		document.addEventListener(this.event, this.listener.bind(this));
-	} else if (document.attachEvent) {
-		document.attachEvent(this.event, this.listener);
+
+	// Start listening for the event
+	document.addEventListener(this.event, listener.bind(this), true);
+
+
+	// Ensures the timer starts immediately if startImmediately === true
+	if (this.startImmediately) {
+		this.start.call(this);
 	}
 
-	// Run check every n seconds
-	setInterval(this.checkForInteraction.bind(this), this.interval);
+
+	// Event listener
+	function listener() {
+
+		if (this.state !== 'idle') {
+			this.start.call(this);
+		}
+	}
+
 }
 
 
-Prompt.prototype.listener = function() {
-	this.now = new Date();
-	this.checkForInteraction.call(this);
-};
+/**
+ * Clear the timer
+ */
+Prompt.prototype.clearTimer = function() {
 
-
-// Checks that are done every n seconds
-Prompt.prototype.checkForInteraction = function() {
-	var timeCheck       = new Date();
-	var timeCheckString = timeCheck.getMinutes() + ':' + timeCheck.getSeconds();
-	var nowString       = this.now.getMinutes() + ':' + this.now.getSeconds();
-
-	if ( timeCheckString !== nowString ) {
-		this.promptUser.call(this);
+	if (this.timer) {
+		clearTimeout(this.timer);
+		this.timer = null;
 	}
 };
 
 
+/**
+ * Trigger your callback and stop timer
+ * Timer will be restarted if this.restart === true
+ */
+Prompt.prototype.triggerCallback = function() {
 
-Prompt.prototype.promptUser = function() {
-	this.prompt = true;
-	this.cb();
+	this.state = 'idle';
+	this.timer = null;
+	this.callback();
+
+	if (this.restart) {
+		this.start.call(this);
+	}
+};
+
+
+/**
+ * Start the timer
+ * Public method, can be called manually
+ */
+Prompt.prototype.start = function() {
+
+	this.clearTimer.call(this);
+	this.state = 'active';
+	this.timer = setTimeout(this.triggerCallback.bind(this), this.interval);
+};
+
+
+/**
+ * Stop the interaction checker
+ * Public method, can be called manually
+ */
+Prompt.prototype.stop = function() {
+
+	this.state = 'idle';
+	this.clearTimer.call(this);
 };
 
 
