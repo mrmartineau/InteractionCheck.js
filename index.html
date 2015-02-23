@@ -8,13 +8,13 @@
 	<body class="l-container" style="height:4000px;">
 		<h1>InteractionCheck.js by Zander Martineau</h1>
 		<p>Open your javascript console to see the results</p>
-		<script src="dist/prompt.js"></script>
+		<script src="dist/interactioncheck.js"></script>
 		<script>
-			var mousemovePrompt = new Prompt('mousemove', 4000, function() {
+			var mousemoveCheck = new InteractionCheck('mousemove', 4000, function() {
 				console.log('no mouse interaction was detected - do something');
 			}, true, false);
 
-			var scrollPrompt = new Prompt('scroll', 8000, function() {
+			var scrollCheck = new InteractionCheck('scroll', 8000, function() {
 				console.log('no scroll interaction was detected - do something');
 			}, true, false);
 
