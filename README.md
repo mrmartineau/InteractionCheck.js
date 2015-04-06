@@ -1,6 +1,9 @@
-[![Code Climate](https://codeclimate.com/github/mrmartineau/InteractionCheck.js/badges/gpa.svg)](https://codeclimate.com/github/mrmartineau/InteractionCheck.js)
 # InteractionCheck.js
+
 Use this script to check if your users have not interacted with your page after a given amount of time. You can choose what to listen for (`mousemove` or `scroll` are good examples) and then run a callback function afterwards.
+
+[![npm version](https://badge.fury.io/js/interactioncheck.svg)](http://badge.fury.io/js/interactioncheck) [![Code Climate](https://codeclimate.com/github/mrmartineau/InteractionCheck.js/badges/gpa.svg)](https://codeclimate.com/github/mrmartineau/InteractionCheck.js) <br>
+[![NPM](https://nodei.co/npm/interactioncheck.png?downloads=true)](https://nodei.co/npm/interactioncheck/)
 
 
 ### Bower
